@@ -20,7 +20,7 @@ function Navbar({ user, logout }) {
         </li>
       </ul>
       <div className="navbar-user">
-        <span>Welcome, {user?.name}</span>
+        <span>Welcome , {user?.name}</span>
         <button onClick={logout} className="btn-logout">
           Logout
         </button>
