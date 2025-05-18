@@ -143,7 +143,7 @@ function Billing() {
   };
 
   const calculateTax = () => {
-    return calculateSubtotal() * 0.1; // 10% tax
+    return calculateSubtotal() * 0.1; // if we need to do tax
   };
 
   const calculateTotal = () => {
