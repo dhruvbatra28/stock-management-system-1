@@ -261,7 +261,7 @@ function Billing() {
                     <li key={product._id} className="product-item">
                       <div className="product-info">
                         <h3>{product.name}</h3>
-                        <p>Price: ${product.price.toFixed(2)}</p>
+                        <p> Price: ${product.price.toFixed(2)}</p>
                         <p>In Stock: {product.quantity}</p>
                       </div>
                       <button
