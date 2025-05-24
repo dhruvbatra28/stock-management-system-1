@@ -1,6 +1,63 @@
 /* Billing.css */
 
 .billing-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.billing-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.billing-column {
+  flex: 1;
+  min-width: 280px;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.billing-search,
+.customer-info input,
+.cart-item input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.product-card,
+.cart-item,
+.transaction-card {
+  background: white;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+}
+
+.reset-button {
+  background-color: #dc3545;
+}
+
+.summary p {
+  margin: 0.3rem 0;
+}
+
+.billing-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
