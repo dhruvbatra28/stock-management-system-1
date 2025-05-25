@@ -493,9 +493,7 @@ function Billing() {
         <div className="invoice-footer">
           <p>Thank you for your business!</p>
           <p>
-            <small>
-              This invoice was generated on {new Date().toLocaleString()}
-            </small>
+            <small>Invoice Date : {new Date().toLocaleString()}</small>
           </p>
         </div>
       </div>
