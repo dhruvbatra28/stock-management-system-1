@@ -13,6 +13,8 @@ import Billing from "./components/Billing";
 import Navbar from "./components/Navbar";
 import "./styles/App.css";
 
+function login() {}
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
