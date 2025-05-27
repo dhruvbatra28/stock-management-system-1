@@ -17,7 +17,7 @@ function login() {}
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ name: "Dhruv" }); // Dummy user
 
   useEffect(() => {
     // Check if user is logged in on page load
