@@ -36,7 +36,7 @@
 }
 
 .nav-links li a {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.85);
   text-decoration: none;
   padding: 0 1.5rem;
   font-size: 1rem;
@@ -48,7 +48,7 @@
 }
 
 .nav-links li a:hover {
-  color: white;
+  color: rgb(95, 87, 87);
 }
 
 .nav-links li.active {
