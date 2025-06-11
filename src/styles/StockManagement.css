@@ -69,6 +69,8 @@
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
+
+  width: 5 cm;
 }
 
 .search-bar input:focus {
@@ -79,7 +81,7 @@
 
 .btn-add {
   background-color: #3498db;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 6px;
   padding: 0.7rem 1.2rem;
