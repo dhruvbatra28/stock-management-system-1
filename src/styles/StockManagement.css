@@ -87,7 +87,7 @@
   padding: 0.7rem 1.2rem;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.21s ease;
+  transition: background-color 0.2s ease;
 }
 
 .btn-add:hover {
