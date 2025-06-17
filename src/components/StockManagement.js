@@ -49,8 +49,16 @@ function StockManagement() {
     setError("");
     setSuccess("");
 
+    console.log("Trying to add product:", newProduct); // DEBUG
+
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        setError("No token found. Please log in.");
+        console.error("Token missing"); // DEBUG
+        return;
+      }
+
       const response = await fetch("http://localhost:5000/api/products", {
         method: "POST",
         headers: {
@@ -61,6 +69,7 @@ function StockManagement() {
       });
 
       const data = await response.json();
+      console.log("API Response:", data); // DEBUG
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to add product");
@@ -78,6 +87,7 @@ function StockManagement() {
       fetchProducts();
     } catch (err) {
       setError(err.message);
+      console.error("Add Product Error:", err); // DEBUG
     }
   };
 
