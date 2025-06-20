@@ -49,13 +49,10 @@ function StockManagement() {
     setError("");
     setSuccess("");
 
-    console.log("Trying to add product:", newProduct); // DEBUG
-
     try {
       const token = localStorage.getItem("token");
       if (!token) {
         setError("No token found. Please log in.");
-        console.error("Token missing"); // DEBUG
         return;
       }
 
@@ -69,7 +66,6 @@ function StockManagement() {
       });
 
       const data = await response.json();
-      console.log("API Response:", data); // DEBUG
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to add product");
@@ -87,7 +83,7 @@ function StockManagement() {
       fetchProducts();
     } catch (err) {
       setError(err.message);
-      console.error("Add Product Error:", err); // DEBUG
+      console.error("Add Product Error:", err);
     }
   };
 
@@ -138,225 +134,169 @@ function StockManagement() {
       {success && <div className="success-message">{success}</div>}
 
       <div className="stock-actions">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          />
-        </div>
-        <button
-          className="btn-add"
-          onClick={() => setShowAddForm(!showAddForm)}
-        >
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+        <button onClick={() => setShowAddForm(!showAddForm)}>
           {showAddForm ? "Cancel" : "Add New Product"}
         </button>
       </div>
 
       {showAddForm && (
-        <div className="add-product-form">
-          <h2>Add New Product</h2>
-          <form onSubmit={handleAddProduct}>
-            <div className="form-group">
-              <label htmlFor="name">Product Name:</label>
-              <input
-                type="text"
-                id="name"
-                value={newProduct.name}
-                onChange={(e) =>
-                  setNewProduct({ ...newProduct, name: e.target.value })
-                }
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="category">Category:</label>
-              <input
-                type="text"
-                id="category"
-                value={newProduct.category}
-                onChange={(e) =>
-                  setNewProduct({ ...newProduct, category: e.target.value })
-                }
-                required
-              />
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="quantity">Initial Quantity:</label>
-                <input
-                  type="number"
-                  id="quantity"
-                  min="0"
-                  value={newProduct.quantity}
-                  onChange={(e) =>
-                    setNewProduct({
-                      ...newProduct,
-                      quantity: parseInt(e.target.value),
-                    })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="price">Price:</label>
-                <input
-                  type="number"
-                  id="price"
-                  min="0"
-                  step="0.01"
-                  value={newProduct.price}
-                  onChange={(e) =>
-                    setNewProduct({
-                      ...newProduct,
-                      price: parseFloat(e.target.value),
-                    })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="threshold">Low Stock Threshold:</label>
-                <input
-                  type="number"
-                  id="threshold"
-                  min="1"
-                  value={newProduct.lowStockThreshold}
-                  onChange={(e) =>
-                    setNewProduct({
-                      ...newProduct,
-                      lowStockThreshold: parseInt(e.target.value),
-                    })
-                  }
-                  required
-                />
-              </div>
-            </div>
-            <button type="submit" className="btn-primary">
-              Add Product
-            </button>
-          </form>
-        </div>
+        <form className="add-product-form" onSubmit={handleAddProduct}>
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={newProduct.name}
+            onChange={(e) =>
+              setNewProduct({ ...newProduct, name: e.target.value })
+            }
+            required
+          />
+          <input
+            type="text"
+            placeholder="Category"
+            value={newProduct.category}
+            onChange={(e) =>
+              setNewProduct({ ...newProduct, category: e.target.value })
+            }
+            required
+          />
+          <input
+            type="number"
+            placeholder="Quantity"
+            value={newProduct.quantity}
+            onChange={(e) =>
+              setNewProduct({
+                ...newProduct,
+                quantity: parseInt(e.target.value),
+              })
+            }
+            required
+          />
+          <input
+            type="number"
+            placeholder="Price"
+            value={newProduct.price}
+            onChange={(e) =>
+              setNewProduct({
+                ...newProduct,
+                price: parseFloat(e.target.value),
+              })
+            }
+            required
+          />
+          <input
+            type="number"
+            placeholder="Low Stock Threshold"
+            value={newProduct.lowStockThreshold}
+            onChange={(e) =>
+              setNewProduct({
+                ...newProduct,
+                lowStockThreshold: parseInt(e.target.value),
+              })
+            }
+            required
+          />
+          <button type="submit">Add Product</button>
+        </form>
       )}
 
       {loading ? (
-        <div className="loading">Loading products...</div>
+        <p>Loading products...</p>
       ) : (
-        <div className="product-list">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>In Stock</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProducts.length === 0 ? (
-                <tr>
-                  <td colSpan="6" className="no-products">
-                    No products found
-                  </td>
-                </tr>
-              ) : (
-                filteredProducts.map((product) => (
-                  <tr
-                    key={product._id}
-                    className={
-                      product.quantity <= product.lowStockThreshold
-                        ? "low-stock"
-                        : ""
-                    }
-                  >
-                    <td>{product.name}</td>
-                    <td>{product.category}</td>
-                    <td>{product.quantity}</td>
-                    <td>${product.price.toFixed(2)}</td>
-                    <td>
-                      <span
-                        className={`status ${
-                          product.quantity <= product.lowStockThreshold
-                            ? "low"
-                            : "ok"
-                        }`}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredProducts.map((product) => (
+              <tr
+                key={product._id}
+                className={
+                  product.quantity <= product.lowStockThreshold
+                    ? "low-stock"
+                    : ""
+                }
+              >
+                <td>{product.name}</td>
+                <td>{product.category}</td>
+                <td>{product.quantity}</td>
+                <td>${product.price.toFixed(2)}</td>
+                <td>
+                  {product.quantity <= product.lowStockThreshold
+                    ? "Low Stock"
+                    : "In Stock"}
+                </td>
+                <td>
+                  {editingProduct && editingProduct.id === product._id ? (
+                    <>
+                      <input
+                        type="number"
+                        value={editingProduct.quantity}
+                        onChange={(e) =>
+                          setEditingProduct({
+                            ...editingProduct,
+                            quantity: e.target.value,
+                          })
+                        }
+                      />
+                      <button
+                        onClick={() =>
+                          handleUpdateStock(
+                            product._id,
+                            editingProduct.action,
+                            editingProduct.quantity
+                          )
+                        }
                       >
-                        {product.quantity <= product.lowStockThreshold
-                          ? "Low Stock"
-                          : "In Stock"}
-                      </span>
-                    </td>
-                    <td>
-                      {editingProduct && editingProduct.id === product._id ? (
-                        <div className="stock-edit">
-                          <input
-                            type="number"
-                            min="1"
-                            value={editingProduct.quantity}
-                            onChange={(e) =>
-                              setEditingProduct({
-                                ...editingProduct,
-                                quantity: e.target.value,
-                              })
-                            }
-                          />
-                          <button
-                            onClick={() =>
-                              handleUpdateStock(
-                                product._id,
-                                editingProduct.action,
-                                editingProduct.quantity
-                              )
-                            }
-                            className="btn-apply"
-                          >
-                            Apply
-                          </button>
-                          <button
-                            onClick={() => setEditingProduct(null)}
-                            className="btn-cancel"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="stock-actions">
-                          <button
-                            onClick={() =>
-                              setEditingProduct({
-                                id: product._id,
-                                action: "add",
-                                quantity: 1,
-                              })
-                            }
-                            className="btn-add-stock"
-                          >
-                            Add
-                          </button>
-                          <button
-                            onClick={() =>
-                              setEditingProduct({
-                                id: product._id,
-                                action: "subtract",
-                                quantity: 1,
-                              })
-                            }
-                            className="btn-subtract-stock"
-                          >
-                            Subtract
-                          </button>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                        Apply
+                      </button>
+                      <button onClick={() => setEditingProduct(null)}>
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() =>
+                          setEditingProduct({
+                            id: product._id,
+                            action: "add",
+                            quantity: 1,
+                          })
+                        }
+                      >
+                        Add
+                      </button>
+                      <button
+                        onClick={() =>
+                          setEditingProduct({
+                            id: product._id,
+                            action: "subtract",
+                            quantity: 1,
+                          })
+                        }
+                      >
+                        Subtract
+                      </button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
