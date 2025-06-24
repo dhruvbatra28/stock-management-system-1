@@ -41,7 +41,7 @@
 .stat-card {
   background-color: #ffffffe6;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
   padding: 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
