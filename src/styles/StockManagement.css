@@ -76,7 +76,7 @@
 .search-bar input:focus {
   outline: none;
   border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(47, 137, 197, 0.2);
+  box-shadow: 0 0 0 2px rgba(49, 143, 206, 0.2);
 }
 
 .btn-add {
